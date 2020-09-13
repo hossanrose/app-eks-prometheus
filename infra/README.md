@@ -1,14 +1,14 @@
 # Provision AWS resources
+AWS resources to build a production grade infrastructure for app deployment
 
 ## IAM user
-IAM user with permissions to push app image to the registry
+Creates an IAM user with permissions to push app image to the registry.
 
 ## ECR registry
-ECR registry to upload the app image to
+Creates Elastic Container registry to upload the app image.
 
 ## EKS Cluster
-
-K8s cluster on AWS with EKS
+Creates K8s cluster on AWS with Elastic Kubernetes Service
 
 After installing the AWS CLI. Configure it to use your credentials.
 
@@ -16,7 +16,7 @@ After installing the AWS CLI. Configure it to use your credentials.
 $ aws configure --profile personal
 AWS Access Key ID [None]: <YOUR_AWS_ACCESS_KEY_ID>
 AWS Secret Access Key [None]: <YOUR_AWS_SECRET_ACCESS_KEY>
-Default region name [None]: <region>
+Default region name [None]: <default_region>
 Default output format [None]: json
 ```
 
@@ -28,6 +28,7 @@ After you've done this, initalize your Terraform workspace, which will download 
 $ terraform workspace new infra
 $ terraform init
 ```
+
 Then, provision your EKS cluster by running `terraform apply`. 
 This will take approximately 10 minutes.
 
@@ -43,7 +44,7 @@ The following command will get the access credentials for your cluster and autom
 configure `kubectl`.
 
 ```shell
-$ aws eks --region us-west-2 update-kubeconfig --name eks-clusterG3HdIjD4
+$ aws eks --region <region_of_eks> update-kubeconfig --name <name_of_cluster>
 ```
 Kubernetes cluster name and region correspond to the output variables showed after the successful Terraform run. You can view these outputs again by running:
 
