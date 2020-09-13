@@ -28,3 +28,16 @@ output "cluster_name" {
   value       = local.cluster_name
 }
 
+## IAM user
+
+output "iam_user" {
+  description = "IAM user created"
+  value       = aws_iam_user.github.arn
+}
+
+## ECR 
+
+output "ecr_registry" {
+  description = "ECR repo url"
+  value       = aws_ecr_repository.python_app.repository_url
+}
