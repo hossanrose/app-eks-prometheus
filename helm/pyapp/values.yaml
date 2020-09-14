@@ -1,15 +1,17 @@
 # Default values for pyapp.
 
+## Image Registry
 registry: 509458535641.dkr.ecr.us-west-2.amazonaws.com
 tag: latest
-replicaCount: 1
 
-
+## App configuration
 app:
   name: pythonapp
   replicas: 1
   pullPolicy: Always
+  ## Service settings 
   service:
+    ## Annotations for enabling prometheus scraping
     annotations:
       prometheus.io/scrape: "true"
       prometheus.io/path: /metrics
@@ -18,9 +20,9 @@ app:
     externalPort: 80
     internalPort: 80
     name: http
+  ## ALB ingress configuration
   ingress:
     enabled: true
     class: alb
     scheme: internet-facing
     host: app.hossanrose.com
-    path:
