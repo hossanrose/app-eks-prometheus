@@ -33,6 +33,11 @@ variable "eks_worker_type" {
   type        = string
 }
 
+variable "eks_worker_capacity" {
+  description = "EKS worker capacity"
+  type        = string
+}
+
 provider "aws" {
   version = ">= 2.28.1"
   region  = "us-west-2"

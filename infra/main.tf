@@ -58,8 +58,8 @@ module "eks" {
     {
       name                 = var.eks_worker_group
       instance_type        = var.eks_worker_type
-      additional_userdata  = "echo foo bar"
-      asg_desired_capacity = 1
+      # additional_userdata  = "echo foo bar"
+      asg_desired_capacity = var.eks_worker_capacity
       #      key_name                      = "eksmanagment"
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     },
