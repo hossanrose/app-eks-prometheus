@@ -1,0 +1,11 @@
+App is now installed!
+
+To find out about your newly configured system, run:
+
+  $ helm status {{ .Release.Name }}
+
+{{- if .Values.app.ingress.enabled }}
+Access the application with the url: http://{{ .Values.app.ingress.host }}
+{{- end }}
+
+

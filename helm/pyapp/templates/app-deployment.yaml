@@ -1,0 +1,40 @@
+{{ $fullname := include "pyapp.fullname" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullname }}
+  labels:
+    app: {{ $fullname }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $fullname }}
+  template:
+    metadata:
+      labels:
+        app: {{ $fullname }}
+    spec:
+      serviceAccountName: {{ $fullname }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.registry }}/{{ .Values.app.name }}:{{ default .Chart.AppVersion .Values.tag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.app.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.app.service.internalPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.app.service.internalPort }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.app.service.internalPort }}
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace

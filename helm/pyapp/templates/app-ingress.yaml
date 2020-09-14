@@ -1,0 +1,25 @@
+{{- if  (.Values.app.ingress.enabled) -}}
+{{- $fullname := include "pyapp.fullname" . -}}
+{{- $servicePort := .Values.app.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullname }}
+  labels:
+    app: {{ $fullname }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.app.ingress.class }}
+    alb.ingress.kubernetes.io/scheme: {{ .Values.app.ingress.scheme }}
+spec:
+  rules:
+  - host: {{ .Values.app.ingress.host }}
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: {{ $fullname }}
+          servicePort: {{ $servicePort }}
+{{- end -}}
