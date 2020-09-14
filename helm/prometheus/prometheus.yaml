@@ -1,0 +1,50 @@
+alertmanager:
+  ## PV set as GP2
+  persistentVolume:
+    storageClass: gp2
+
+server:
+  ## PV set as GP2
+  persistentVolume:
+    storageClass: gp2
+  service:
+    ## Type set as NodePort for ingress
+    type: NodePort
+  ingress:
+    ## If true, Prometheus server Ingress will be created
+    ##
+    enabled: true
+
+    ## Prometheus server Ingress annotations
+    ##
+    annotations: 
+       kubernetes.io/ingress.class: 'alb'
+       alb.ingress.kubernetes.io/scheme: 'internet-facing'
+       alb.ingress.kubernetes.io/healthcheck-path: '/-/healthy' 
+
+    ## Prometheus server Ingress additional labels
+    ##
+    extraLabels: {}
+    #   host: prometheus.hossanrose.com
+
+    ## Prometheus server Ingress hostnames with optional path
+    ## Must be provided if Ingress is enabled
+    ##
+    hosts: 
+       - prometheus.hossanrose.com/*
+
+    ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
+    extraPaths: []
+    # - path: /*
+    #   backend:
+    #     serviceName: ssl-redirect
+    #     servicePort: use-annotation
+
+    ## Prometheus server Ingress TLS configuration
+    ## Secrets must be manually created in the namespace
+    ##
+    tls: []
+    #   - secretName: prometheus-server-tls
+    #     hosts:
+    #       - prometheus.domain.com
+
