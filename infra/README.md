@@ -57,5 +57,5 @@ ALB is the ingress controller installed
 
 ```shell
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install incubator/aws-alb-ingress-controller --set autoDiscoverAwsRegion=true --set autoDiscoverAwsVpcID=true --set clusterName=eks-cluster
+helm install incubator/aws-alb-ingress-controller --set autoDiscoverAwsRegion=true --set autoDiscoverAwsVpcID=true --set clusterName=<eks_cluster_name>
 ```

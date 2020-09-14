@@ -1,3 +1,4 @@
+## ECR for app images
 resource "aws_ecr_repository" "python_app" {
   name                 = "pythonapp"
   image_tag_mutability = "MUTABLE"

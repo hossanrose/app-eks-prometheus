@@ -1,5 +1,4 @@
 ## Setting up the VPC 
-
 data "aws_availability_zones" "available" {}
 
 locals {
@@ -40,7 +39,6 @@ module "vpc" {
 }
 
 ## Setting up the EKS cluster
-
 module "eks" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name = local.cluster_name
@@ -58,14 +56,13 @@ module "eks" {
     {
       name                 = var.eks_worker_group
       instance_type        = var.eks_worker_type
-      # additional_userdata  = "echo foo bar"
       asg_desired_capacity = var.eks_worker_capacity
-      #      key_name                      = "eksmanagment"
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     },
   ]
 }
 
+## Configure EKS cluster
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
@@ -82,8 +79,7 @@ provider "kubernetes" {
   version                = "~> 1.12"
 }
 
-## Security groups
-
+## Security group for worker
 resource "aws_security_group" "worker_group_mgmt_one" {
   name_prefix = "worker_group_mgmt_one"
   vpc_id      = module.vpc.vpc_id
@@ -112,25 +108,7 @@ resource "aws_security_group" "worker_group_mgmt_one" {
 
 }
 
-/*
-resource "aws_security_group" "all_worker_mgmt" {
-  name_prefix = "all_worker_management"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-
-    cidr_blocks = [
-      "10.0.0.0/8",
-      "172.16.0.0/12",
-      "192.168.0.0/16",
-    ]
-  }
-}
-*/
-
+## Backend state configuration
 terraform {
   backend "s3" {
     bucket = "app-infra-terraform"

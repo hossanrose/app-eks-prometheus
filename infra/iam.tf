@@ -1,3 +1,4 @@
+## IAM user/key for GitHub configuration
 resource "aws_iam_user" "github" {
   name = "githubactions"
 
@@ -10,7 +11,7 @@ resource "aws_iam_access_key" "github-key" {
   user = aws_iam_user.github.name
 }
 
-# Policy to get the github user access to push images
+## Policy to get the github user access to push images
 resource "aws_iam_user_policy" "github-policy" {
   name = "ECR_image"
   user = aws_iam_user.github.name
@@ -46,7 +47,7 @@ resource "aws_iam_user_policy" "github-policy" {
 EOF
 }
 
-# Policy to allow ALB ingress access to modify AWS resource
+## Policy to allow ALB ingress access to modify AWS resource
 resource "aws_iam_policy" "alb_ingress_policy" {
   name        = "alb-ingress-k8s"
   description = "ALB ingress policy"

@@ -1,3 +1,4 @@
+## EKS information
 output "cluster_endpoint" {
   description = "Endpoint for EKS control plane."
   value       = module.eks.cluster_endpoint
@@ -28,15 +29,13 @@ output "cluster_name" {
   value       = local.cluster_name
 }
 
-## IAM user
-
+## IAM user for GitHub
 output "iam_user" {
   description = "IAM user created"
   value       = aws_iam_user.github.arn
 }
 
-## ECR 
-
+## ECR Url
 output "ecr_registry" {
   description = "ECR repo url"
   value       = aws_ecr_repository.python_app.repository_url
