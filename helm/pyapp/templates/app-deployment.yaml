@@ -22,7 +22,7 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.registry }}/{{ .Values.app.name }}:{{ default .Chart.AppVersion .Values.tag }}"
-        imagePullPolicy: {{ default "IfNotPresent" .Values.app.pullPolicy }}
+        imagePullPolicy: {{ default .Values.app.pullPolicy "IfNotPresent" }}
         ports:
         - containerPort: {{ .Values.app.service.internalPort }}
         livenessProbe:

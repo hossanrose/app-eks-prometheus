@@ -10,6 +10,10 @@ app:
   replicas: 1
   pullPolicy: Always
   service:
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/path: /metrics
+      prometheus.io/port: "80"
     type: NodePort
     externalPort: 80
     internalPort: 80
