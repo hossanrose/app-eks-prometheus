@@ -1,0 +1,22 @@
+# Default values for pyapp.
+
+registry: 509458535641.dkr.ecr.us-west-2.amazonaws.com
+tag: latest
+replicaCount: 1
+
+
+app:
+  name: pythonapp
+  replicas: 1
+  pullPolicy: Always
+  service:
+    type: NodePort
+    externalPort: 80
+    internalPort: 80
+    name: http
+  ingress:
+    enabled: true
+    class: alb
+    scheme: internet-facing
+    host: app.hossanrose.com
+    path:
