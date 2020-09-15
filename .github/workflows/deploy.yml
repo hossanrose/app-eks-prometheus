@@ -1,7 +1,7 @@
 name: Deploy
 on:
   push:
-    branches: [ master ]
+    branches: [ test ]
 #    paths:
 #    - 'helm/pyapp/*'
 jobs:
@@ -15,8 +15,19 @@ jobs:
           cat ./helm/pyapp/Chart.old.yaml | grep -v appVersion > ./helm/pyapp/Chart.yaml &&
           echo -e "\r\nappVersion: v${GITHUB_REF##*/}\r\n" >> ./helm/pyapp/Chart.yaml &&
           cat ./helm/pyapp/Chart.yaml
-      - name: Deploy
-        uses: WyriHaximus/github-action-helm3@v2
+      - name: Configure AWS credentials for EKS deployment
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          exec: helm upgrade pyapp ./helm/pyapp/ --install --wait --atomic --namespace=pyapp 
-          kubeconfig: '${{ secrets.KUBECONFIG }}'
+          aws-access-key-id: ${{ secrets.EKS_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.EKS_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.EKS_REGION }}
+      - name: Setup kubeconfig
+        id: setup-kubeconfig
+        run: |
+          aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+      - name: Setup Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - name: Deploy
+        run: |
+          helm upgrade ./helm/pyapp/ --install --wait --atomic --namespace=pyapp 
