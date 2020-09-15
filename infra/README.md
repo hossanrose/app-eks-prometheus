@@ -14,7 +14,7 @@ Creates,
 - VPC, public/private subnets, security groups.
 - K8s cluster on AWS with Elastic Kubernetes Service.
 
-After installing the AWS CLI. Configure it to use your credentials.
+After installing the AWS CLI. Configure it with credentials.
 
 ```shell
 $ aws configure --profile personal
@@ -24,16 +24,15 @@ Default region name [None]: <default_region>
 Default output format [None]: json
 ```
 
-This enables Terraform access to the configuration file and performs operations on your behalf with these security credentials.
-After you've done this, initalize your Terraform workspace, which will download the provider and initialize it with the values provided in the `terraform.tfvars` file.
+This enables Terraform access to the configuration file and perform operations with these security credentials.
+Initalize Terraform workspace with below commands, which will download the provider/modules and initialize it with the values provided in the `terraform.tfvars` file.
 
 ```shell
 $ terraform workspace new infra
 $ terraform init
 ```
 
-Then, provision your EKS cluster by running `terraform apply`. 
-This will take approximately 10 minutes.
+Provision EKS cluster by running `terraform apply`. This can take about 10 minutes.
 
 ```shell
 $ terraform apply
@@ -41,14 +40,14 @@ $ terraform apply
 
 ### Configure kubectl
 
-To configure kubetcl, you need both [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and [AWS IAM Authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html).
+To configure kubetcl, both [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and [AWS IAM Authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html) is needed.
 
-The following command will get the access credentials for your cluster and automatically configure `kubectl`.
+The following command will get the access credentials for the cluster and automatically configure `kubectl`.
 
 ```shell
 $ aws eks --region <region_of_eks> update-kubeconfig --name <name_of_cluster>
 ```
-Kubernetes cluster name and region correspond to the output variables showed after the successful Terraform run. You can view these outputs again by running:
+Kubernetes cluster name and region correspond to the output variables showed after the successful Terraform run. Outputs can be again viewed by running:
 
 ```shell
 $ terraform output
