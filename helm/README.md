@@ -13,8 +13,8 @@ $ helm install pyapp pyapp/ -n pyapp
 Deployed Application can be accessed with [http://app.hossanrose.com](http://app.hossanrose.com)
 
 ### Automated deployment
-Application will be autodeployed when triggered by build|push workflow or on any change in pyapp directory. 
-The [Deploy]((../.github/workflows/deploy.yml) workflow is used for auto deployment
+Application will be autodeployed when triggered by build|push workflow or on any change in pyapp chart directory. 
+The [Deploy](../.github/workflows/deploy.yml) workflow is used for auto deployment.
 
 ## Prometheus deployment
 
