@@ -19,7 +19,7 @@ Application is build using Python and Flask.
 
 Application and Prometheus is deployed on to the EKS cluster in different namespaces. ALB ingress is used to configure the public endpoints.
 **Endpoints:**
-- http://app.hossanrose.com
+- http://app.hossanrose.com/hello
 - http://prometheus.hossanrose.com
 
 #### Application
