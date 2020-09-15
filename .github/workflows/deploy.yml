@@ -1,0 +1,22 @@
+name: Deploy
+on:
+  push:
+    branches: [ master ]
+#    paths:
+#    - 'helm/pyapp/*'
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v1
+      - name: Prep helm chart
+        run: |
+          mv ./helm/pyapp/Chart.yaml ./helm/pyapp/Chart.old.yaml &&
+          cat ./helm/pyapp/Chart.old.yaml | grep -v appVersion > ./helm/pyapp/Chart.yaml &&
+          echo -e "\r\nappVersion: v${GITHUB_REF##*/}\r\n" >> ./helm/pyapp/Chart.yaml &&
+          cat ./helm/pyapp/Chart.yaml
+      - name: Deploy
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm upgrade pyapp ./helm/pyapp/ --install --wait --atomic --namespace=pyapp 
+          kubeconfig: '${{ secrets.KUBECONFIG }}'
