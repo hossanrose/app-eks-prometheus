@@ -1,7 +1,7 @@
 name: Deploy
 on:
   push:
-    branches: [ test ]
+    branches: [ deploy/test ]
 #    paths:
 #    - 'helm/pyapp/*'
 jobs:
