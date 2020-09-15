@@ -11,7 +11,7 @@ An EKS cluster is build using Terraform to deploy the application and monitoring
 ### Application
 
 Application is build using Python and Flask.
-- Dockerfile for packing the application as a container.
+- Dockerfile for packaging the application as a container.
 - Metrics of the HTTP endpoint /hello monitored.
 - Metrics implementation is done using prometheus-flask-exporter plugin.
 
@@ -31,8 +31,7 @@ Two workflows are used to automate the deployment,
 
 #### Prometheus
 
-Prometheus is deployed using stable [helm chart](https://github.com/helm/charts/tree/master/stable/prometheus),
-with custom values for ALB ingress configuration.
+Prometheus is deployed using stable [helm chart](https://github.com/helm/charts/tree/master/stable/prometheus), with custom values for ALB ingress configuration.
 
 ### Prometheus Query
 
