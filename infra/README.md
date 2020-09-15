@@ -1,14 +1,18 @@
 # Provision AWS resources
-AWS resources to build a production grade infrastructure for app deployment
+AWS resources to build infrastructure for app deployment.
 
-## IAM user
-Creates an IAM user with permissions to push app image to the registry.
+## IAM user/policy
+Creates,
+- An IAM user with permissions to push app image to the registry.
+- A polcy to give worker node role permission on ALB configuration.
 
 ## ECR registry
 Creates Elastic Container registry to upload the app image.
 
 ## EKS Cluster
-Creates K8s cluster on AWS with Elastic Kubernetes Service
+Creates,
+- VPC, public/private subnets, security groups.
+- K8s cluster on AWS with Elastic Kubernetes Service.
 
 After installing the AWS CLI. Configure it to use your credentials.
 
@@ -21,7 +25,6 @@ Default output format [None]: json
 ```
 
 This enables Terraform access to the configuration file and performs operations on your behalf with these security credentials.
-
 After you've done this, initalize your Terraform workspace, which will download the provider and initialize it with the values provided in the `terraform.tfvars` file.
 
 ```shell
@@ -40,8 +43,7 @@ $ terraform apply
 
 To configure kubetcl, you need both [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and [AWS IAM Authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html).
 
-The following command will get the access credentials for your cluster and automatically
-configure `kubectl`.
+The following command will get the access credentials for your cluster and automatically configure `kubectl`.
 
 ```shell
 $ aws eks --region <region_of_eks> update-kubeconfig --name <name_of_cluster>
@@ -57,5 +59,5 @@ ALB is the ingress controller installed
 
 ```shell
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install incubator/aws-alb-ingress-controller --set autoDiscoverAwsRegion=true --set autoDiscoverAwsVpcID=true --set clusterName=<eks_cluster_name>
+helm install alb-ingress incubator/aws-alb-ingress-controller --set autoDiscoverAwsRegion=true --set autoDiscoverAwsVpcID=true --set clusterName=<eks_cluster_name>
 ```

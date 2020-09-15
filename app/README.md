@@ -4,7 +4,7 @@ Based on Python and Flask, the application uses prometheus-flask-exporter to ins
 
 ## Deployment
 
-Application deployment is handled using GitHub Actions
+Application deployment is handled using GitHub Actions,
 - Build and Push of application image to ECR happens on every change in app directory using [Workflow](../.github/workflows/build_push.yml) 
 - After Push of image the application deployment is triggered with helm using [Workflow](../.github/workflows/deploy.yml)
 
