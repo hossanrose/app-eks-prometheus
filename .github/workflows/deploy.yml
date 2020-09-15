@@ -30,4 +30,4 @@ jobs:
           curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       - name: Deploy
         run: |
-          helm upgrade ./helm/pyapp/ --install --wait --atomic --namespace=pyapp 
+          helm upgrade pyapp ./helm/pyapp/ --install --wait --atomic --namespace=pyapp 
