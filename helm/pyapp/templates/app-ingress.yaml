@@ -1,7 +1,8 @@
 {{- if  (.Values.app.ingress.enabled) -}}
 {{- $fullname := include "pyapp.fullname" . -}}
 {{- $servicePort := .Values.app.service.externalPort -}}
-apiVersion: extensions/v1beta1
+#apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1 
 kind: Ingress
 metadata:
   name: {{ $fullname }}
